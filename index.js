@@ -20,7 +20,7 @@ const turso = createClient({
 // Obtener todos los usuarios
 app.get('/users', async (req, res) => {
   try {
-    const ans = await turso.execute(`SELECT * FROM contacts`);
+    const ans = await turso.execute(`SELECT * FROM cartas`);
     console.log(ans);
     
     // Enviar solo las filas (rows) como respuesta
@@ -32,11 +32,11 @@ app.get('/users', async (req, res) => {
 });
 
 // Obtener un usuario por contact_id
-app.get('/users/:contact_id', async (req, res) => {
-  const { contact_id } = req.params;
+app.get('/users/:id', async (req, res) => {
+  const { id } = req.params;
   
   try {
-    const ans = await turso.execute(`SELECT * FROM contacts WHERE contact_id = ?`, [contact_id]);
+    const ans = await turso.execute(`SELECT * FROM cartas WHERE id = ?`, [id]);
     if (ans.rows.length === 0) {
       return res.status(404).json({ mensaje: "Usuario no encontrado" });
     }
@@ -49,14 +49,14 @@ app.get('/users/:contact_id', async (req, res) => {
 });
 
 // Actualizar un usuario por contact_id
-app.patch('/users/:contact_id', async (req, res) => {
-  const { contact_id } = req.params;
-  const { first_name,last_name, email, phone } = req.body; // Campos que se podrían actualizar
+app.patch('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title,description, value, images } = req.body; // Campos que se podrían actualizar
 
   try {
     const ans = await turso.execute(
-      `UPDATE contacts SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE contact_id = ?`,
-      [first_name,last_name, email, phone, contact_id]
+      `UPDATE cartas SET title = ?, description = ?, value = ?, images = ? WHERE id = ?`,
+      [title,description, value, images, id]
     );
     
     if (ans.changes === 0) {
@@ -72,12 +72,12 @@ app.patch('/users/:contact_id', async (req, res) => {
 
 // Crear un nuevo usuario
 app.post('/users', async (req, res) => {
-  const { first_name, last_name, email, phone } = req.body; // Los datos del nuevo usuario
+  const { title, description, value, images } = req.body; // Los datos del nuevo usuario
 
   try {
     const ans = await turso.execute(
-      `INSERT INTO contacts (first_name, last_name, email, phone) VALUES (?, ?, ?, ?)`,
-      [first_name, last_name, email, phone]
+      `INSERT INTO cartas (title, description, value, images) VALUES (?, ?, ?, ?)`,
+      [title, description, value, images]
     );
 
     if (ans.changes === 0) {
@@ -92,11 +92,11 @@ app.post('/users', async (req, res) => {
 });
 
 // Eliminar un usuario por contact_id
-app.delete('/users/:contact_id', async (req, res) => {
-  const { contact_id } = req.params;
+app.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
 
   try {
-    const ans = await turso.execute(`DELETE FROM contacts WHERE contact_id = ?`, [contact_id]);
+    const ans = await turso.execute(`DELETE FROM cartas WHERE id = ?`, [id]);
     
     if (ans.changes === 0) {
       return res.status(404).json({ mensaje: "Usuario no encontrado" });
