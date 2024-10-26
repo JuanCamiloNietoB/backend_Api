@@ -1,0 +1,33 @@
+{
+  "name": "backend_api",
+  "version": "1.0.0",
+  "description": "el backend para la api del proyecto",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuanCamiloNietoB/backend_Api.git"
+  },
+  "keywords": [
+    "Api"
+  ],
+  "author": "Juan Camilo Nieto Bejarano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuanCamiloNietoB/backend_Api/issues"
+  },
+  "homepage": "https://github.com/JuanCamiloNietoB/backend_Api#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  }
+}
