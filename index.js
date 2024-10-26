@@ -2,12 +2,13 @@
 import express from "express"
 import { createClient } from "@libsql/client";
 import dotenv from 'dotenv';
+import cors from 'cors'
 
 dotenv.config()
 const app = express()
 const port = parseInt(process.env.PORT) || 3000;
 app.use(express.json());
-
+app.use(cors());
 console.log("hola mundo!!");
 
 const {TURSO_DATABASE_URL,TURSO_AUTH_TOKEN} = process.env;
