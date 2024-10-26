@@ -1,0 +1,5 @@
+.env
+node_modules/
+.idx/
+.vscode/
+conts
