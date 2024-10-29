@@ -19,8 +19,10 @@ const turso = createClient({
 });
 
 app.get('/', (req, res) => {
-  res.send('Hola Mundo! usar /users')
-})
+  // Obteniendo el link actual de la página
+  const link = `${req.protocol}://${req.get('host')}`;
+  res.send(`Hola Mundo! usar el siguiente link para ver mas ${link}/users`);
+});
 
 // Obtener todos los usuarios
 app.get('/users', async (req, res) => {
