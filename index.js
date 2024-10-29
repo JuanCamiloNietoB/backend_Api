@@ -6,7 +6,7 @@ import cors from 'cors'
 
 dotenv.config()
 const app = express()
-const port = parseInt(process.env.PORT) || 3000;
+const port = parseInt(process.env.PORT);
 app.use(express.json());
 app.use(cors());
 console.log("hola mundo!!");
@@ -17,6 +17,10 @@ const turso = createClient({
   url: TURSO_DATABASE_URL,
   authToken: TURSO_AUTH_TOKEN
 });
+
+app.get('/', (req, res) => {
+  res.send('Hola Mundo! usar /users')
+})
 
 // Obtener todos los usuarios
 app.get('/users', async (req, res) => {
