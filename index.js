@@ -18,6 +18,10 @@ const turso = createClient({
   authToken: TURSO_AUTH_TOKEN
 });
 
+app.get('/config', (req, res) => {
+  res.json({ link: process.env.LINK });
+});
+
 app.get('/', (req, res) => {
   // Obteniendo el link actual de la página
   const link = `${req.protocol}://${req.get('host')}`;
