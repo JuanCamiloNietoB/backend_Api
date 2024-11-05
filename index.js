@@ -27,6 +27,7 @@ app.get('/config', (req, res) => {
   res.json({ link: process.env.LINK });
 });*/
 
+/*
 // Registro de usuario (Sign up)
 app.post('/signup', async (req, res) => {
   const { first_name, last_name, email, birthday, password } = req.body;
@@ -93,6 +94,7 @@ app.get('/protected', (req, res) => {
     res.json({ mensaje: "Ruta protegida, acceso autorizado", user });
   });
 });
+*/
 
 app.get('/', (req, res) => {
   // Obteniendo el link actual de la página
