@@ -143,7 +143,7 @@ app.get('/signup', async (req, res) => {
   }
 });
 
-// Registro de usuario (Sign up)
+// Crear un nuevo usuario
 app.post('/signup', async (req, res) => {
   const { firts_name, last_name, email, birthday, password } = req.body;
 
@@ -158,15 +158,37 @@ app.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insertar nuevo usuario en la base de datos
-    const result = await turso.execute(
-      `INSERT INTO usuarios (firts_name, last_name, email, birthday, password) VALUES (?, ?, ?, ?, ?)`,
+    const ans = await turso.execute(
+      `INSERT INTO usuarios (firts_name, last_name, email, birthday, hashedPassword) VALUES (?, ?, ?, ?, ?)`,
       [firts_name, last_name, email, birthday, hashedPassword]
     );
 
+    if (ans.changes === 0) {
+      return res.status(400).json({ mensaje: "Error al registrar el usuario" });
+    }
+
     res.status(201).json({ mensaje: "Usuario registrado correctamente" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ mensaje: "Error al registrar el usuario" });
+    console.error('Error al registrar el usuario:', error);
+    res.status(500).json({ mensaje: "Error interno del servidor" });
+  }
+});
+
+//eliminar usuarios
+app.delete('/signup/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const ans = await turso.execute(`DELETE FROM usuarios WHERE user_id = ?`, [id]);
+
+    if (ans.changes === 0) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+
+    res.json({ mensaje: "Usuario eliminado correctamente" });
+  } catch (error) {
+    console.error('Error al eliminar el usuario:', error);
+    res.status(500).json({ mensaje: "Error interno del servidor" });
   }
 });
 
