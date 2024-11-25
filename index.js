@@ -145,7 +145,7 @@ app.get('/signup', async (req, res) => {
 
 // Registro de usuario (Sign up)
 app.post('/signup', async (req, res) => {
-  const { first_name, last_name, email, birthday, password } = req.body;
+  const { firts_name, last_name, email, birthday, password } = req.body;
 
   try {
     // Verificar si el usuario ya existe
@@ -159,8 +159,8 @@ app.post('/signup', async (req, res) => {
 
     // Insertar nuevo usuario en la base de datos
     const result = await turso.execute(
-      `INSERT INTO usuarios (first_name, last_name, email, birthday, password) VALUES (?, ?, ?, ?, ?)`,
-      [first_name, last_name, email, birthday, hashedPassword]
+      `INSERT INTO usuarios (firts_name, last_name, email, birthday, password) VALUES (?, ?, ?, ?, ?)`,
+      [firts_name, last_name, email, birthday, hashedPassword]
     );
 
     res.status(201).json({ mensaje: "Usuario registrado correctamente" });
