@@ -33,11 +33,11 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   // Obteniendo el link actual de la página
   const link = `${req.protocol}://${req.get('host')}`;
-  res.send(`Hola Mundo! usar el siguiente link para ver mas ${link}/users`);
+  res.send(`Hola Mundo! usar el siguiente link para ver mas ${link}/carts`);
 });
 
 // Obtener todas las cartas
-app.get('/users', async (req, res) => {
+app.get('/carts', async (req, res) => {
   try {
     const ans = await turso.execute(`SELECT * FROM cartas`);
     console.log(ans);
@@ -52,7 +52,7 @@ app.get('/users', async (req, res) => {
 
 
 // Obtener una Carta por id
-app.get('/users/:id', async (req, res) => {
+app.get('/carts/:id', async (req, res) => {
   const { id } = req.params;
   
   try {
@@ -69,7 +69,7 @@ app.get('/users/:id', async (req, res) => {
 });
 
 // Actualizar una Carta por id
-app.patch('/users/:id', async (req, res) => {
+app.patch('/carts/:id', async (req, res) => {
   const { id } = req.params;
   const { title,description, value, images } = req.body; // Campos que se podrían actualizar
 
@@ -91,7 +91,7 @@ app.patch('/users/:id', async (req, res) => {
 });
 
 // Crear un nueva carta
-app.post('/users', async (req, res) => {
+app.post('/carts', async (req, res) => {
   const { title, description, value, images } = req.body; // Los datos de la nueva cartar
 
   try {
@@ -112,7 +112,7 @@ app.post('/users', async (req, res) => {
 });
 
 // Eliminar una carta por id
-app.delete('/users/:id', async (req, res) => {
+app.delete('/carts/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -126,6 +126,20 @@ app.delete('/users/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ mensaje: "Error al eliminar carta" });
+  }
+});
+
+// Obtener todos los usurios
+app.get('/signup', async (req, res) => {
+  try {
+    const ans = await turso.execute(`SELECT * FROM usuarios`);
+    console.log(ans);
+    
+    // Enviar solo las filas (rows) como respuesta
+    res.json(ans.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al obtener los usurios" });
   }
 });
 
