@@ -37,6 +37,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://my-app-dsku.onrender.com');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 app.get('/', (req, res) => {
   // Obteniendo el link actual de la página
   const link = `${req.protocol}://${req.get('host')}`;
